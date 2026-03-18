@@ -1,10 +1,10 @@
 # Projeto-Integrador-1-ADS-Turma-A-CEUB-2026-1
 Trabalho da Disciplina
 
-Projeto : Igreja em Ação Digital
-Objetivos iniciais : Auxiliar a igreja nas suas redes sociais
+Projeto : Iron Burguer
+Objetivos iniciais : Criar um sistema funcional para um food truck
 
-Descrição: Com um projeto integrado com a disciplina de sexta-feira( metodologia de desenvolvimento) vamos visitar a igreja e ver as necessidades dos padres e desenvolver soluçõs praticas para os problemas socias, adiministrativos, financeiros e organizacional.
+Descrição: Com um projeto integrado com a disciplina de quinta-feira( Análise e projeto de sistemas) vamos  desenvolver soluçõs praticas para os problemas adiministrativos, financeiros e organizacionais para o nosso cliente
 
 
 Geovanna de Freitas Santos : PO (Dev Team) Front/Back
