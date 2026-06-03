@@ -103,7 +103,7 @@ Plaintextiron_burguer_app/
         
         Módulo Financeiro: Integração com gateways de pagamento externo (Pix/Cartão).
 
-    Codigo revisado e corrigido por : Manus.ia ,Claudecode, Professor Felipe pires (Desenvolvimento de Sistemas) e Professor Eduardo Jose (Análise e Projeto de Sistemas)
+    Codigo revisado, corrigido e auxiliado por : Manus.ia ,Claudecode, Professor Felipe pires (Desenvolvimento de Sistemas), Professor Wendell Cruzeiro (Desenvolvimento web) e Professor Eduardo Jose (Análise e Projeto de Sistemas)
         
 Instituição: Centro Universitário de Brasília (CEUB)
 Curso: Análise e Desenvolvimento de Sistemas
