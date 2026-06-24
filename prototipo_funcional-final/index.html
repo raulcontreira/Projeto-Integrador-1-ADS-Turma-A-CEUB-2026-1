@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Burguer - Sistema de Gestão de Pedidos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">🔥 IRON BURGUER</div>
+                <div class="user-info" id="user-info-display" style="display: none;">
+                    <span id="logged-user-name"></span>
+                    <button class="logout-btn" onclick="logout()">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Login View -->
+        <div id="login-view" class="view active">
+            <div class="container login-container">
+                <div class="login-card">
+                    <h2>Acesso ao Sistema</h2>
+                    <div class="login-form">
+                        <div class="form-group">
+                            <label for="username">Usuário</label>
+                            <input type="text" id="username" placeholder="Digite seu usuário">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" id="password" placeholder="Digite sua senha">
+                        </div>
+                        <button class="login-btn" onclick="login()">Entrar</button>
+                        <div id="login-error" class="login-error"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cliente View -->
+        <div id="cliente-view" class="view">
+            <div class="container">
+                <!-- Cardápio -->
+                <section class="menu-section">
+                    <h2>Cardápio</h2>
+                    
+                    <div class="categories">
+                        <button class="category-btn active" onclick="filterCategory('hamburguer')">Hambúrgueres</button>
+                        <button class="category-btn" onclick="filterCategory('acompanhamento')">Acompanhamentos</button>
+                        <button class="category-btn" onclick="filterCategory('bebida')">Bebidas</button>
+                    </div>
+
+                    <div id="products-list" class="products-grid">
+                        <!-- Produtos serão inseridos aqui -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Carrinho Flutuante -->
+            <div class="cart-floating">
+                <button class="cart-btn" onclick="toggleCartModal()">
+                    🛒 <span id="cart-count">0</span>
+                </button>
+            </div>
+
+            <!-- Modal do Carrinho -->
+            <div id="cart-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Seu Carrinho</h3>
+                        <button class="close-btn" onclick="toggleCartModal()">&times;</button>
+                    </div>
+                    <div id="cart-items" class="cart-items">
+                        <!-- Itens do carrinho -->
+                    </div>
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">R$ 0,00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Taxa de Serviço:</span>
+                            <span id="taxa">R$ 0,00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="total">R$ 0,00</span>
+                        </div>
+                    </div>
+                    <button class="checkout-btn" onclick="finalizarPedido()">Ir para o Pagamento</button>
+                </div>
+            </div>
+
+            <!-- Modal de Pagamento -->
+            <div id="payment-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Finalizar Pagamento</h3>
+                        <button class="close-btn" onclick="togglePaymentModal()">&times;</button>
+                    </div>
+                    <div class="payment-summary">
+                        <h4>Resumo do Pedido</h4>
+                        <div id="payment-items-list" class="payment-items-list"></div>
+                        <div class="total-display">Total a Pagar: <span id="payment-total-value">R$ 0,00</span></div>
+                    </div>
+                    <div class="payment-form">
+                        <div class="form-group">
+                            <label>Forma de Pagamento</label>
+                            <select id="payment-method" onchange="toggleCardFields()">
+                                <option value="pix">PIX</option>
+                                <option value="cartao">Cartão de Crédito</option>
+                                <option value="dinheiro">Dinheiro</option>
+                            </select>
+                        </div>
+                        <div id="card-fields" style="display: none;">
+                            <div class="form-group">
+                                <label>Número do Cartão</label>
+                                <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Validade</label>
+                                    <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label>CVV</label>
+                                    <input type="password" id="card-cvv" placeholder="***" maxlength="3">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="checkout-btn" onclick="processarPagamento()">Confirmar e Pagar</button>
+                        <div id="payment-error" class="login-error"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Confirmação -->
+            <div id="confirmation-modal" class="modal">
+                <div class="modal-content confirmation">
+                    <div class="confirmation-icon">✓</div>
+                    <h3>Pedido Realizado!</h3>
+                    <p id="order-number">Número do Pedido: #042</p>
+                    <p id="order-total">Total: R$ 0,00</p>
+                    <p class="confirmation-text">Seu pedido foi enviado para a cozinha. Acompanhe o status na tela de status.</p>
+                    <button class="btn-primary" onclick="closeConfirmation()">Voltar ao Cardápio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cozinha View -->
+        <div id="cozinha-view" class="view">
+            <div class="container">
+                <section class="kitchen-section">
+                    <h2>Painel de Produção</h2>
+                    <div class="kitchen-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="pedidos-total">0</div>
+                            <div class="stat-label">Pedidos Totais</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pedidos-preparo">0</div>
+                            <div class="stat-label">Em Preparo</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pedidos-prontos">0</div>
+                            <div class="stat-label">Prontos</div>
+                        </div>
+                    </div>
+
+                    <div id="kitchen-queue" class="kitchen-queue">
+                        <!-- Fila de pedidos -->
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Gestor View -->
+        <div id="gestor-view" class="view">
+            <div class="container">
+                <section class="dashboard-section">
+                    <h2>Dashboard do Gestor</h2>
+                    
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <h4>Faturamento Total (Hoje)</h4>
+                            <div class="dashboard-value" id="faturamento-total">R$ 0,00</div>
+                            <p class="dashboard-change" id="faturamento-change">↑ 0% vs ontem</p>
+                        </div>
+                        <div class="dashboard-card">
+                            <h4>Total de Pedidos</h4>
+                            <div class="dashboard-value" id="total-pedidos-gestor">0</div>
+                            <p class="dashboard-change">Pedidos realizados</p>
+                        </div>
+                        <div class="dashboard-card alert">
+                            <h4>⚠️ Estoque Crítico</h4>
+                            <div id="estoque-critico" class="estoque-list">
+                                <!-- Itens com estoque baixo -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Vendas por Produto (Hoje)</h3>
+                        <div id="sales-chart" class="sales-chart">
+                            <!-- Gráfico será renderizado aqui -->
+                        </div>
+                    </div>
+
+                    <div class="estoque-section">
+                        <h3>Gerenciar Estoque</h3>
+                        <div id="estoque-manager" class="estoque-manager">
+                            <!-- Controles de estoque -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
